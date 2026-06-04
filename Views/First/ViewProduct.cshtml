@@ -1,0 +1,12 @@
+@model App.Models.ProductModel
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Chi tiết sản phẩm";
+}
+<div style="text-align: center; margin-top: 50px; padding: 20px;" class=" card bg-light text-dark">
+    <h1 class="card-title">@Model.Name</h1>
+    <div class="card-body">
+        <p class="card-text">Giá: @Model.Price</p>
+    </div>
+    
+</div>

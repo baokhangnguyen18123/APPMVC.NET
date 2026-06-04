@@ -1,0 +1,41 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "./${workspaceFolder}/c:/Users/IMK/AppData/Roaming/Code/User/workspaceStorage/45389477c5fa33065b31401027465640/ms-dotnettools.csdevkit/AppMVC.Net.sln",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary;ForceNoAlign"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "publish",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "publish",
+                "./${workspaceFolder}/c:/Users/IMK/AppData/Roaming/Code/User/workspaceStorage/45389477c5fa33065b31401027465640/ms-dotnettools.csdevkit/AppMVC.Net.sln",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary;ForceNoAlign"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "watch",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "watch",
+                "run",
+                "--project",
+                "./${workspaceFolder}/c:/Users/IMK/AppData/Roaming/Code/User/workspaceStorage/45389477c5fa33065b31401027465640/ms-dotnettools.csdevkit/AppMVC.Net.sln"
+            ],
+            "problemMatcher": "$msCompile"
+        }
+    ]
+}
