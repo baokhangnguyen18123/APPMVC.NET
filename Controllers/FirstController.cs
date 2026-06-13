@@ -76,7 +76,7 @@ public class FirstController(ILogger<FirstController> _logger, IWebHostEnvironme
         // return View("/MyView/XinChao1.cshtml",userName);
         return View("XinChao2",userName);
     }
- 
+    [AcceptVerbs("POST","GET")]
     public IActionResult ViewProduct(int? id)
     {
         var product = _productService.FirstOrDefault(p => p.Id == id);
