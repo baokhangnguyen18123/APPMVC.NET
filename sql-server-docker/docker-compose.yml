@@ -1,0 +1,21 @@
+services:
+  bk-mssql:
+    image: "mcr.microsoft.com/mssql/server:2025-latest"
+    container_name: sqlserver-bk
+    restart: always
+    hostname: mssql
+
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=Password123!
+      - MSSQL_PID=Express
+
+    volumes:
+      - mssqlvolume:/var/opt/mssql
+
+    ports:
+      - "1433:1433"
+
+volumes:
+  mssqlvolume:
+    name: sqlserver-bk-vl

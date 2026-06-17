@@ -1,7 +1,19 @@
 using App.Services;
 using App.Extensions;
 using Microsoft.AspNetCore.Routing.Constraints;
+using App.Models;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
+
+
+//Đăng ký DBContext -> SQLServer
+builder.Services.AddDbContext<AppDbContext>(options =>
+{
+    // ConnectString from AppSetting
+    var connectionString = builder.Configuration.GetConnectionString("AppMvcConnectionString");
+    options.UseSqlServer(connectionString);
+});
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

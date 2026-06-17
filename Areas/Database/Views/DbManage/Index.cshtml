@@ -1,0 +1,51 @@
+@using Microsoft.EntityFrameworkCore;
+@using System.Data
+@inject AppDbContext dbContext
+@{
+    ViewData["Title"] = "Thông tin DB";
+    var connect = dbContext.Database.GetDbConnection();
+    var dbName = connect.Database;
+    var can_connect = dbContext.Database.CanConnect();
+
+
+}
+<partial name="_AlertMessage"/>
+
+<h2>Thông tin</h2>
+<p> - Database: @dbName</p>
+<p> - Source: @connect.DataSource</p>
+<p> - Can connect: @can_connect</p>
+<h2>Migrations</h2>
+@foreach(var m in dbContext.Database.GetAppliedMigrations())
+{
+    <p>@m</p>
+}
+@foreach(var m in dbContext.Database.GetPendingMigrations())
+{
+    <p>@m (pending)</p>
+}
+@if (!can_connect)
+{
+    <p class="alert alert-danger">Không thể kết nối được với database</p>
+}
+@if(dbContext.Database.GetPendingMigrations().Any())
+{
+    <form method="post" asp-action="Migrate">
+        <button class="btn btn-success" asp-action="Migrate">Cập nhật Migration</button>
+    </form>
+    
+}
+@if (can_connect)
+{
+    <h2>Tables: </h2>
+    await dbContext.Database.OpenConnectionAsync();
+    var table = await dbContext.Database.GetDbConnection().GetSchemaAsync("Tables");
+    <ul>
+        @foreach(System.Data.DataRow row in table.Rows)
+        {
+            <li>@row["TABLE_NAME"]</li>
+        }
+    </ul>
+
+    <a class="btn btn-danger" asp-action="DeleteDb">Xóa Database: @dbName</a>
+}

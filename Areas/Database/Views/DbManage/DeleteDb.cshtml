@@ -1,0 +1,11 @@
+@{
+    ViewData["Title"] = "Xóa database";
+}
+<h1>@ViewData["Title"]</h1>
+<p class="alert alert-danger">Bạn có chắc chắn muốn xóa database không ?</p>
+
+<form method="post" asp-action="DeleteDb">
+    <button type="submit" class="btn btn-danger">Xóa Database</button>
+    <hr>
+    <a asp-action="Index">Quản lí Database</a>
+</form>
