@@ -1,0 +1,72 @@
+@model App.Models.Contacts.Contact
+
+@{
+    ViewData["Title"] = "Gửi liên hệ đến AppMVC";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center align-items-center g-5">
+
+        <div class="col-lg-5 text-center text-lg-start mb-4 mb-lg-0">
+            <h1 class="display-5 fw-bold text-primary mb-3">@ViewData["Title"]</h1>
+            <p class="lead text-muted mb-4">
+                Chúng tôi luôn mong muốn lắng nghe ý kiến từ bạn. Hãy để lại thông tin và tin nhắn, chúng tôi sẽ phản
+                hồi trong thời gian sớm nhất!
+            </p>
+            <hr class="w-25 mx-auto mx-lg-0 border-primary border-3 opacity-100 rounded">
+        </div>
+
+        <div class="col-lg-7 col-xl-6">
+            <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+                <div class="card-body p-4 p-sm-5 bg-white">
+                    <form asp-action="SendContact">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger rounded-3" role="alert"></div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="FullName" class="form-control bg-light border-0" placeholder="Họ và tên" />
+                            <label asp-for="FullName" class="text-secondary"></label>
+                            <span asp-validation-for="FullName"
+                                  class="text-danger fst-italic small d-block mt-1"></span>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="Email" class="form-control bg-light border-0"
+                                   placeholder="name@example.com" />
+                            <label asp-for="Email" class="text-secondary"></label>
+                            <span asp-validation-for="Email" class="text-danger fst-italic small d-block mt-1"></span>
+                        </div>
+
+
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="Phone" class="form-control bg-light border-0" placeholder="Số điện thoại" />
+                            <label asp-for="Phone" class="text-secondary"></label>
+                            <span asp-validation-for="Phone" class="text-danger fst-italic small d-block mt-1"></span>
+                        </div>
+
+
+                        <div class="form-floating mb-4">
+                            <textarea asp-for="Message" class="form-control bg-light border-0"
+                                      placeholder="Nội dung tin nhắn" style="height: 120px"></textarea>
+                            <label asp-for="Message" class="text-secondary"></label>
+                            <span asp-validation-for="Message" class="text-danger fst-italic small d-block mt-1"></span>
+                        </div>
+
+                        <div class="d-grid mt-4">
+                            <button type="submit"
+                                    class="btn btn-primary btn-lg rounded-pill shadow-sm fw-bold d-flex align-items-center justify-content-center gap-2">
+                                <span>Gửi liên hệ ngay</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
+                                     class="bi bi-send-fill" viewBox="0 0 16 16">
+                                    <path
+                                    d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471z" />
+                                </svg>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

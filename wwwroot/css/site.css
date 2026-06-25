@@ -1,3 +1,10 @@
+@charset "UTF-8";
+/* ==========================================================================
+   1. VARIABLES (Khai báo biến hệ thống)
+   ========================================================================== */
+/* ==========================================================================
+   2. GLOBAL STYLES (Thiết lập chung cho toàn trang)
+   ========================================================================== */
 html {
   font-size: 14px;
 }
@@ -7,25 +14,108 @@ html {
     font-size: 16px;
   }
 }
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-
 body {
-  margin-bottom: 60px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: #334155;
+  background-color: #ffffff;
+  margin-bottom: 70px;
+  -webkit-font-smoothing: antialiased;
 }
 
-.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
-  text-align: end;
+a {
+  color: #0d6efd;
+  text-decoration: none;
+  transition: all 0.25s ease-in-out;
+}
+a:hover {
+  color: rgb(1.5532786885, 76.887295082, 187.9467213115);
+  text-decoration: none;
 }
 
-.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-  text-align: start;
+/* ==========================================================================
+   3. LAYOUT (Bố cục giao diện)
+   ========================================================================== */
+.navbar {
+  background-color: #0b2239;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 0.75rem 0;
+}
+.navbar .navbar-brand {
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #8176b7 !important;
+}
+.navbar .navbar-brand span {
+  color: #38bdf8;
+}
+.navbar .navbar-nav .nav-item {
+  margin: 0 0.25rem;
+}
+.navbar .navbar-nav .nav-item .nav-link {
+  color: #ffffff !important;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+.navbar .navbar-nav .nav-item .nav-link:hover {
+  color: #38bdf8 !important;
+  background-color: rgba(255, 255, 255, 0.05);
+}
+.navbar .navbar-toggler {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+.navbar .navbar-toggler .navbar-toggler-icon {
+  filter: invert(1);
+}
+
+.container main {
+  padding-top: 2rem;
+  padding-bottom: 3rem;
+  min-height: calc(100vh - 150px);
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  line-height: 70px;
+  background-color: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+}
+.footer .container {
+  color: #64748b;
+  font-size: 0.9rem;
+}
+.footer .container a {
+  color: #64748b;
+  font-weight: 500;
+}
+.footer .container a:hover {
+  color: #0d6efd;
+}
+
+/* ==========================================================================
+   4. CUSTOM COMPONENTS
+   ========================================================================== */
+.btn-custom {
+  background-color: #0d6efd;
+  color: #ffffff;
+  padding: 10px 24px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 6px -1px rgba(13, 110, 253, 0.2), 0 2px 4px -2px rgba(13, 110, 253, 0.2);
+}
+.btn-custom:hover {
+  background-color: rgb(38.2909836066, 125.1536885246, 253.2090163934);
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(13, 110, 253, 0.3), 0 4px 6px -4px rgba(13, 110, 253, 0.3);
+}
+.btn-custom:active {
+  transform: translateY(0);
 }

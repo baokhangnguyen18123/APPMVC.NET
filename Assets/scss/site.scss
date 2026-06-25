@@ -1,0 +1,113 @@
+/* ==========================================================================
+   1. VARIABLES (Khai báo biến hệ thống)
+   ========================================================================== */
+// Bảng màu chuẩn mực, độ tương phản cao
+$primary-color: #0d6efd; // Xanh dương chủ đạo
+$navbar-bg: #0b2239; // Xanh Navy đậm (Sâu và sang trọng hơn #0f3a5f)
+$footer-bg: #f8fafc; // Xám trắng mượt mà (Thay cho màu tím nhạt cũ)
+$text-color: #334155; // Màu chữ xám tro đậm (Dễ đọc, không gây mỏi mắt)
+$background-color: #ffffff; // Nền trắng tinh khiết
+
+// Accent colors (Màu nhấn)
+$nav-text-color: #ffffff; // Màu chữ menu (Xám sáng)
+$nav-hover-color: #38bdf8; // Màu xanh cyan sáng rực khi hover
+
+// Cấu hình Font và Spacing
+$font-family-base:
+  -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+  Arial, sans-serif;
+$footer-height: 70px; // Tăng nhẹ chiều cao footer cho thoáng
+
+/* ==========================================================================
+   2. GLOBAL STYLES (Thiết lập chung cho toàn trang)
+   ========================================================================== */
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+body {
+  font-family: $font-family-base;
+  color: $text-color;
+  background-color: $background-color;
+  margin-bottom: $footer-height;
+  -webkit-font-smoothing: antialiased; // Giúp font chữ trên màn hình độ phân giải cao mượt hơn
+}
+
+a {
+  color: $primary-color;
+  text-decoration: none;
+  transition: all 0.25s ease-in-out;
+
+  &:hover {
+    color: darken($primary-color, 15%);
+    text-decoration: none; // Bỏ gạch chân để trông hiện đại hơn
+  }
+}
+
+/* ==========================================================================
+   3. LAYOUT (Bố cục giao diện)
+   ========================================================================== */
+// Thanh điều hướng (Header)
+@import "header";
+
+// Phần chân trang (Footer)
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  line-height: $footer-height;
+  background-color: $footer-bg;
+  border-top: 1px solid #e2e8f0; // Đường viền tinh tế
+
+  .container {
+    color: #64748b;
+    font-size: 0.9rem;
+
+    a {
+      color: #64748b;
+      font-weight: 500;
+
+      &:hover {
+        color: $primary-color;
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+   4. CUSTOM COMPONENTS
+   ========================================================================== */
+// Nút bấm phong cách nổi (Elevated Button)
+.btn-custom {
+  background-color: $primary-color;
+  color: #ffffff;
+  padding: 10px 24px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); // Chuyển động mượt như app native
+  box-shadow:
+    0 4px 6px -1px rgba(13, 110, 253, 0.2),
+    0 2px 4px -2px rgba(13, 110, 253, 0.2);
+
+  &:hover {
+    background-color: lighten($primary-color, 5%);
+    color: #ffffff;
+    transform: translateY(-2px); // Hiệu ứng nút nẩy lên nhẹ
+    box-shadow:
+      0 10px 15px -3px rgba(13, 110, 253, 0.3),
+      0 4px 6px -4px rgba(13, 110, 253, 0.3);
+  }
+
+  &:active {
+    transform: translateY(0); // Nút lún xuống khi click
+  }
+}
