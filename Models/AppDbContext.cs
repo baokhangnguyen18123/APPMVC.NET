@@ -1,7 +1,8 @@
 using App.Models.Contacts;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 namespace App.Models;
-public class AppDbContext : DbContext
+public class AppDbContext : IdentityDbContext<AppUser>
 {
     public AppDbContext(DbContextOptions<AppDbContext> options): base(options)
     {
@@ -15,14 +16,14 @@ public class AppDbContext : DbContext
         base.OnModelCreating(builder);
 
         // Tùy chỉnh Fluent API: Xóa bỏ tiền tố "AspNet" ở tên các bảng Identity để tên bảng đẹp hơn
-        // foreach (var entityType in builder.Model.GetEntityTypes())
-        // {
-        //     var tableName = entityType.GetTableName();
-        //     if (tableName != null && tableName.StartsWith("AspNet"))
-        //     {
-        //         entityType.SetTableName(tableName.Substring(6));
-        //     }
-        // }
+        foreach (var entityType in builder.Model.GetEntityTypes())
+        {
+            var tableName = entityType.GetTableName();
+            if (tableName != null && tableName.StartsWith("AspNet"))
+            {
+                entityType.SetTableName(tableName.Substring(6));
+            }
+        }
     }
     public DbSet<Contact> Contacts { get; set; }
 

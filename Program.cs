@@ -3,6 +3,7 @@ using App.Extensions;
 using Microsoft.AspNetCore.Routing.Constraints;
 using App.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,67 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     var connectionString = builder.Configuration.GetConnectionString("AppMvcConnectionString");
     options.UseSqlServer(connectionString);
 });
+//Đăng kí Identity
+builder.Services.AddIdentity<AppUser, IdentityRole>()
+.AddEntityFrameworkStores<AppDbContext>()
+.AddDefaultTokenProviders()
+.AddDefaultUI();
+
+builder.Services.AddAuthentication()
+.AddGoogle(options =>
+{
+    var googleConfig = builder.Configuration.GetSection("Authentication:Google");
+    options.ClientId = googleConfig["ClientId"];
+    options.ClientSecret = googleConfig["ClientSecret"];
+    options.CallbackPath = "/login-google";
+})
+// .AddTwitter()
+.AddFacebook(options =>
+{
+    // Lấy cấu hình từ appsettings.json
+    options.AppId = builder.Configuration["Authentication:Facebook:AppId"];
+    options.AppSecret = builder.Configuration["Authentication:Facebook:AppSecret"];
+    options.CallbackPath = "/login-facebook";
+})
+// .AddMicrosoftAccount()
+;
+builder.Services.ConfigureApplicationCookie(options =>
+{
+   options.LoginPath ="/Login/";
+   options.LogoutPath="/Logout/";
+   options.AccessDeniedPath = "/khongduoctruycap.html";
+
+
+});
+
+// Truy cập IdentityOptions
+builder.Services.Configure<IdentityOptions> (options => {
+    // Thiết lập về Password
+    options.Password.RequireDigit = false; // Không bắt phải có số
+    options.Password.RequireLowercase = false; // Không bắt phải có chữ thường
+    options.Password.RequireNonAlphanumeric = false; // Không bắt ký tự đặc biệt
+    options.Password.RequireUppercase = false; // Không bắt buộc chữ in
+    options.Password.RequiredLength = 3; // Số ký tự tối thiểu của password
+    options.Password.RequiredUniqueChars = 1; // Số ký tự riêng biệt
+
+    // Cấu hình Lockout - khóa user
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes (5); // Khóa 5 phút
+    options.Lockout.MaxFailedAccessAttempts = 3; // Thất bại 3 lầ thì khóa
+    options.Lockout.AllowedForNewUsers = true;
+
+    // Cấu hình về User.
+    options.User.AllowedUserNameCharacters = // các ký tự đặt tên user
+        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+    options.User.RequireUniqueEmail = true;  // Email là duy nhất
+
+    // Cấu hình đăng nhập.
+    options.SignIn.RequireConfirmedEmail = true;            // Cấu hình xác thực địa chỉ email (email phải tồn tại)
+    options.SignIn.RequireConfirmedPhoneNumber = false;     // Xác thực số điện thoại
+    options.SignIn.RequireConfirmedAccount = true;
+
+});
+
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
