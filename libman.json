@@ -1,0 +1,11 @@
+{
+  "version": "1.0",
+  "defaultProvider": "unpkg",
+  "libraries": [
+    {
+      "library": "multiple-select@2.4.0",
+      "destination": "wwwroot/lib/multiple-select",
+      "files": ["dist/multiple-select.min.js", "dist/multiple-select.min.css"]
+    }
+  ]
+}

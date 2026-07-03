@@ -1,0 +1,70 @@
+@model EditExtraProfileModel
+@{
+    ViewData["Title"] = "Chỉnh sửa hồ sơ cá nhân";
+}
+
+<div class="container mt-4 mb-5">
+    <h2 class="text-primary border-bottom pb-2 mb-4">@ViewData["Title"]</h2>
+
+    <partial name="_StatusMessage" />
+
+    <div class="row">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-light border-bottom-0 pt-3 pb-2">
+                    <h5 class="mb-0 text-secondary">Cập nhật thông tin</h5>
+                </div>
+                <div class="card-body">
+                    <form id="profile-form" method="post">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                        <div class="bg-light p-3 rounded border mb-4">
+                            <h6 class="text-muted mb-3">Thông tin cố định</h6>
+
+                            <div class="mb-3">
+                                <label asp-for="UserName" class="form-label fw-semibold"></label>
+                                <input asp-for="UserName" class="form-control text-muted bg-white" disabled />
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="UserEmail" class="form-label fw-semibold"></label>
+                                <input asp-for="UserEmail" class="form-control text-muted bg-white" disabled />
+                            </div>
+                            <div class="mb-0">
+                                <label asp-for="PhoneNumber" class="form-label fw-semibold"></label>
+                                <input asp-for="PhoneNumber" class="form-control text-muted bg-white" disabled />
+                                <div class="form-text small">Số điện thoại được thay đổi ở trang cài đặt bảo mật.</div>
+                            </div>
+                        </div>
+
+                        <h6 class="text-dark mb-3">Thông tin tùy chỉnh</h6>
+
+                        <div class="mb-3">
+                            <label asp-for="HomeAdress" class="form-label fw-semibold"></label>
+                            <textarea asp-for="HomeAdress" class="form-control" rows="3"
+                                      placeholder="Nhập địa chỉ liên hệ của bạn..."></textarea>
+                            <span asp-validation-for="HomeAdress" class="text-danger small"></span>
+                        </div>
+                        <div class="mb-4">
+                            <label asp-for="BirthDate" class="form-label fw-semibold"></label>
+                            <input asp-for="BirthDate" type="date" class="form-control" />
+                            <span asp-validation-for="BirthDate" class="text-danger small"></span>
+                        </div>
+
+                        <hr class="text-muted mb-4" />
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                            <button id="update-profile-button" type="submit" class="btn btn-primary px-4 fw-semibold">
+                                Lưu dữ liệu
+                            </button>
+                            <a asp-action="Index" class="btn btn-outline-secondary px-4">Hủy bỏ</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

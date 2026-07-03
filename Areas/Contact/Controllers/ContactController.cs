@@ -2,17 +2,19 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using App.Data;
+using App.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using App.Models;
 using ContactModel = App.Models.Contacts.Contact;
-using Microsoft.AspNetCore.Authorization;
 
 namespace App.Areas.Contact.Controllers
 {
     [Area("Contact")]
     // [Route("/contact/[Action]")]
+    [Authorize(Roles = RoleName.Administrator)]
     public class ContactController : Controller
     {
         private readonly AppDbContext _context;
@@ -38,8 +40,7 @@ namespace App.Areas.Contact.Controllers
                 return NotFound();
             }
 
-            var contact = await _context.Contacts
-                .FirstOrDefaultAsync(m => m.ID == id);
+            var contact = await _context.Contacts.FirstOrDefaultAsync(m => m.ID == id);
             if (contact == null)
             {
                 return NotFound();
@@ -47,8 +48,9 @@ namespace App.Areas.Contact.Controllers
 
             return View(contact);
         }
+
         [TempData]
-        public string StatusMessage {get; set;}
+        public string StatusMessage { get; set; }
 
         // GET: Contact/Create
         [HttpGet("/contact")]
@@ -64,7 +66,9 @@ namespace App.Areas.Contact.Controllers
         [HttpPost("/contact/")]
         [ValidateAntiForgeryToken]
         [AllowAnonymous]
-        public async Task<IActionResult> SendContact([Bind("FullName,Email,Phone,Message")] ContactModel contact)
+        public async Task<IActionResult> SendContact(
+            [Bind("FullName,Email,Phone,Message")] ContactModel contact
+        )
         {
             if (ModelState.IsValid)
             {
@@ -74,13 +78,11 @@ namespace App.Areas.Contact.Controllers
                 await _context.SaveChangesAsync();
 
                 StatusMessage = "Liên hệ của bạn đã được gửi";
-                
-                return RedirectToAction("Index","Home", new {area=""});
+
+                return RedirectToAction("Index", "Home", new { area = "" });
             }
             return View(contact);
         }
-
-        
 
         // GET: Contact/Delete/5
         [HttpGet("/admin/contact/delete/{id}")]
@@ -91,8 +93,7 @@ namespace App.Areas.Contact.Controllers
                 return NotFound();
             }
 
-            var contact = await _context.Contacts
-                .FirstOrDefaultAsync(m => m.ID == id);
+            var contact = await _context.Contacts.FirstOrDefaultAsync(m => m.ID == id);
             if (contact == null)
             {
                 return NotFound();
