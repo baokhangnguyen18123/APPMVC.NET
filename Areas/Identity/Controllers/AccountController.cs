@@ -557,11 +557,6 @@ namespace App.Areas.Identity.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SendCode(SendCodeViewModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return View();
-            }
-
             var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
             if (user == null)
             {
