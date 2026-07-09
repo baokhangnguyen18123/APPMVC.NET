@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace App.Areas.ProductManage.Controllers;
 [Area("ProductManage")]
-public class ProductController(ProductService _productService, ILogger<ProductController> _logger) : Controller
+public class ProductController(ProductService _productService) : Controller
 {
     [Route("/cac-sp")]
     public IActionResult Index()

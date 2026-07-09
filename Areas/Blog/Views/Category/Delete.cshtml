@@ -1,0 +1,44 @@
+@model App.Models.Blog.Category
+
+@{
+    ViewData["Title"] = "Xóa danh mục";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="alert alert-warning">
+    Bạn có chắc muốn xóa danh mục này không?
+</div>
+
+<div class="card mb-3">
+    <div class="card-body">
+        <dl class="row mb-0">
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Title)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Title)
+            </dd>
+
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Slug)
+            </dt>
+            <dd class="col-sm-9">
+                <code>@Html.DisplayFor(model => model.Slug)</code>
+            </dd>
+
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.ParentCategory)
+            </dt>
+            <dd class="col-sm-9">
+                @(Model.ParentCategory?.Title ?? "Không có")
+            </dd>
+        </dl>
+    </div>
+</div>
+
+<form asp-action="Delete">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Xóa</button>
+    <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+</form>

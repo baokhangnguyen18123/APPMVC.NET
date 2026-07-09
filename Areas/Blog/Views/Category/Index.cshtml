@@ -1,0 +1,74 @@
+@model IEnumerable<App.Models.Blog.Category>
+
+@{
+    ViewData["Title"] = "Danh sách danh mục";
+    var categoryRows = new List<(App.Models.Blog.Category Category, int Level)>();
+    var addedCategoryIds = new HashSet<int>();
+
+    void AddCategoryRows(IEnumerable<App.Models.Blog.Category> categories, int level)
+    {
+        foreach (var category in categories.OrderBy(c => c.Title))
+        {
+            if (!addedCategoryIds.Add(category.Id))
+            {
+                continue;
+            }
+
+            categoryRows.Add((category, level));
+            AddCategoryRows(category.CategoryChildren, level + 1);
+        }
+    }
+
+    AddCategoryRows(Model, 0);
+}
+
+<div class="d-flex align-items-center justify-content-between mb-3">
+    <h1 class="mb-0">@ViewData["Title"]</h1>
+    <a asp-action="Create" class="btn btn-primary">Thêm danh mục</a>
+</div>
+
+<table class="table table-striped table-hover align-middle">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Slug)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ParentCategory)
+            </th>
+            <th class="text-end">Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var row in categoryRows)
+        {
+            var item = row.Category;
+            var level = row.Level;
+            <tr>
+                <td>
+                    <span style="padding-left: @(level * 24)px">
+                        @if (level > 0)
+                        {
+                            <span class="text-muted">|-- </span>
+                        }
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </span>
+                </td>
+                <td>
+                    <code>@Html.DisplayFor(modelItem => item.Slug)</code>
+                </td>
+                <td>
+                    @(item.ParentCategory?.Title ?? "Không có")
+                </td>
+                <td class="text-end">
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">Sửa</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Chi tiết</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger">Xóa</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

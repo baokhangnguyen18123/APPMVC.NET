@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 namespace App.Controllers;
 
 [Route("he-mat-troi/[action]")]
-public class PlanetController(PlanetService _planetService, ILogger<PlanetController> _logger) : Controller
+public class PlanetController(PlanetService _planetService) : Controller
 {
         
     // [Route("/danh-sach-cac-hanh-tinh.html")]

@@ -1,0 +1,65 @@
+@model App.Models.Blog.Category
+
+@{
+    ViewData["Title"] = "Chi tiết danh mục";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="card mb-3">
+    <div class="card-body">
+        <dl class="row mb-0">
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Title)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Title)
+            </dd>
+
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Slug)
+            </dt>
+            <dd class="col-sm-9">
+                <code>@Html.DisplayFor(model => model.Slug)</code>
+            </dd>
+
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.ParentCategory)
+            </dt>
+            <dd class="col-sm-9">
+                @(Model.ParentCategory?.Title ?? "Không có")
+            </dd>
+
+            <dt class="col-sm-3">
+                Danh mục con
+            </dt>
+            <dd class="col-sm-9">
+                @if (Model.CategoryChildren.Any())
+                {
+                    <ul class="mb-0">
+                        @foreach (var child in Model.CategoryChildren.OrderBy(c => c.Title))
+                        {
+                            <li>@child.Title</li>
+                        }
+                    </ul>
+                }
+                else
+                {
+                    <span>Không có</span>
+                }
+            </dd>
+        </dl>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Sửa</a>
+    <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+</div>

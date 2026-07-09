@@ -481,4 +481,8 @@ $RECYCLE.BIN/
 # Vim temporary swap files
 *.swp
 
+# Ẩn file chứa cây thư mục (tránh rác project)
+ProjectTree.md
+
+# Ẩn file chứa chuỗi kết nối và cấu hình bảo mật
 appsettings.json

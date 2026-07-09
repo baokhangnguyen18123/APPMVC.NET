@@ -18,7 +18,7 @@ public class FirstController(ILogger<FirstController> _logger, IWebHostEnvironme
     public void Nothing()
     {
         _logger.LogInformation("Nothing action đã được gọi");
-        Response.Headers.Add("Hi", "Xin chao tu Nothing action");
+        Response.Headers["Hi"] = "Xin chao tu Nothing action";
     }
     public object Anything()
     {

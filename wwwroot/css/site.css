@@ -36,11 +36,13 @@ a:hover {
    3. LAYOUT (Bố cục giao diện)
    ========================================================================== */
 .navbar {
-  background-color: #0b2239;
+  background: linear-gradient(90deg, #071827 0%, #0b2239 48%, #12324f 100%);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   padding: 0.75rem 0;
 }
 .navbar .navbar-brand {
+  display: inline-flex;
+  align-items: center;
   font-weight: 700;
   letter-spacing: 0.5px;
   color: #8176b7 !important;
@@ -54,13 +56,28 @@ a:hover {
 .navbar .navbar-nav .nav-item .nav-link {
   color: #ffffff !important;
   font-weight: 500;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
+  padding: 0.55rem 0.9rem;
+  border-radius: 999px;
   transition: all 0.3s ease;
 }
 .navbar .navbar-nav .nav-item .nav-link:hover {
   color: #38bdf8 !important;
   background-color: rgba(255, 255, 255, 0.05);
+}
+.navbar .dropdown-menu {
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.16);
+  padding: 0.45rem;
+}
+.navbar .dropdown-menu .dropdown-item {
+  border-radius: 8px;
+  color: #334155;
+  font-weight: 500;
+}
+.navbar .dropdown-menu .dropdown-item:hover {
+  background-color: #e0f2fe;
+  color: #075985;
 }
 .navbar .navbar-toggler {
   border-color: rgba(255, 255, 255, 0.2);

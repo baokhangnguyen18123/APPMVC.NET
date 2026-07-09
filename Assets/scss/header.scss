@@ -1,10 +1,12 @@
 // Thanh điều hướng (Header)
 .navbar {
-  background-color: $navbar-bg;
+  background: linear-gradient(90deg, #071827 0%, $navbar-bg 48%, #12324f 100%);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); // Đổ bóng sâu và mềm hơn
   padding: 0.75rem 0; // Tăng khoảng cách trên dưới cho thanh menu
 
   .navbar-brand {
+    display: inline-flex;
+    align-items: center;
     font-weight: 700;
     letter-spacing: 0.5px;
     color: #8176b7 !important; // Cực kỳ nổi bật trên nền tối
@@ -22,8 +24,8 @@
       .nav-link {
         color: $nav-text-color !important;
         font-weight: 500;
-        padding: 0.5rem 1rem;
-        border-radius: 6px;
+        padding: 0.55rem 0.9rem;
+        border-radius: 999px;
         transition: all 0.3s ease;
 
         &:hover {
@@ -40,6 +42,24 @@
   }
 
   // Chỉnh màu nút toggle trên giao diện Mobile
+  .dropdown-menu {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 16px 36px rgba(15, 23, 42, 0.16);
+    padding: 0.45rem;
+
+    .dropdown-item {
+      border-radius: 8px;
+      color: $text-color;
+      font-weight: 500;
+
+      &:hover {
+        background-color: #e0f2fe;
+        color: #075985;
+      }
+    }
+  }
+
   .navbar-toggler {
     border-color: rgba(255, 255, 255, 0.2);
     .navbar-toggler-icon {
