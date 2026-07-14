@@ -116,6 +116,39 @@ public class CategoryController : Controller
             );
         }
 
+        if (category.ParentCategoryId != null && category.ParentCategoryId != category.Id)
+        {
+            var categoryLinks = await _context
+                .Categories.Select(c => new { c.Id, c.ParentCategoryId })
+                .ToListAsync();
+
+            bool HasChildCategory(int parentId, int childId, HashSet<int> checkedIds)
+            {
+                foreach (var child in categoryLinks.Where(c => c.ParentCategoryId == parentId))
+                {
+                    if (!checkedIds.Add(child.Id))
+                    {
+                        continue;
+                    }
+
+                    if (child.Id == childId || HasChildCategory(child.Id, childId, checkedIds))
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+
+            if (HasChildCategory(category.Id, category.ParentCategoryId.Value, new HashSet<int>()))
+            {
+                ModelState.AddModelError(
+                    "ParentCategoryId",
+                    "Danh mục cha không được là danh mục con của chính nó."
+                );
+            }
+        }
+
         if (ModelState.IsValid)
         {
             try

@@ -1,0 +1,51 @@
+@model App.Models.Blog.Post
+
+@{
+    ViewData["Title"] = "Chi tiết bài viết";
+}
+
+<div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
+    <h1 class="mb-0">@ViewData["Title"]</h1>
+    @if (Model.Published)
+    {
+        <span class="badge text-bg-success">Đã xuất bản</span>
+    }
+    else
+    {
+        <span class="badge text-bg-secondary">Bản nháp</span>
+    }
+</div>
+
+<div class="card mb-3">
+    <div class="card-body">
+        <h2 class="card-title h4">@Model.Title</h2>
+        @if (!string.IsNullOrWhiteSpace(Model.Description))
+        {
+            <p class="card-text text-muted">@Model.Description</p>
+        }
+
+        <dl class="row mb-0">
+            <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Slug)</dt>
+            <dd class="col-sm-9"><code>@Model.Slug</code></dd>
+
+            <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Author)</dt>
+            <dd class="col-sm-9">@(Model.Author?.UserName ?? Model.AuthorId)</dd>
+
+            <dt class="col-sm-3">@Html.DisplayNameFor(model => model.DateCreated)</dt>
+            <dd class="col-sm-9">@Model.DateCreated.ToString("dd/MM/yyyy HH:mm")</dd>
+
+            <dt class="col-sm-3">@Html.DisplayNameFor(model => model.DateUpdated)</dt>
+            <dd class="col-sm-9">@Model.DateUpdated.ToString("dd/MM/yyyy HH:mm")</dd>
+        </dl>
+    </div>
+</div>
+
+<div class="card mb-3">
+    <div class="card-header fw-semibold">@Html.DisplayNameFor(model => model.Content)</div>
+    <div class="card-body" style="white-space: pre-wrap;">@Html.Raw(Model.Content)</div>
+</div>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.PostId" class="btn btn-primary">Sửa</a>
+    <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+</div>

@@ -63,10 +63,11 @@ namespace App.Areas.Identity.Controllers
             model.totalUsers = await qr.CountAsync();
             model.countPages = (int)Math.Ceiling((double)model.totalUsers / model.ITEMS_PER_PAGE);
 
-            if (model.currentPage < 1)
-                model.currentPage = 1;
-            if (model.currentPage > model.countPages)
-                model.currentPage = model.countPages;
+            model.currentPage = Math.Clamp(
+                model.currentPage,
+                1,
+                Math.Max(model.countPages, 1)
+            );
 
             var qr1 = qr.Skip((model.currentPage - 1) * model.ITEMS_PER_PAGE)
                 .Take(model.ITEMS_PER_PAGE)

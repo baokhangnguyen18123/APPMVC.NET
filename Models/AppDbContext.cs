@@ -28,8 +28,18 @@ public class AppDbContext : IdentityDbContext<AppUser>
         {
             entity.HasIndex(c => c.Slug);
         });
+        builder.Entity<PostCategory>(entity =>
+        {
+            entity.HasKey(pc => new { pc.PostID, pc.CategoryID });
+        });
+        builder.Entity<Post>(entity =>
+        {
+            entity.HasIndex(p => p.Slug);
+        });
     }
 
     public DbSet<Contact> Contacts { get; set; }
     public DbSet<Category> Categories { get; set; }
+    public DbSet<Post> Posts { get; set; }
+    public DbSet<PostCategory> PostCategories { get; set; }
 }

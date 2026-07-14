@@ -1,0 +1,96 @@
+@model IEnumerable<App.Models.Blog.Post>
+
+@{
+    ViewData["Title"] = "Quản lý bài viết";
+}
+
+<div class="d-flex align-items-center justify-content-between mb-3">
+    <h1 class="mb-0">@ViewData["Title"]</h1>
+    <a asp-action="Create" class="btn btn-primary">Thêm bài viết</a>
+</div>
+<partial name="_StatusMessage" />
+<p class="text-muted">Tổng số bài viết: @ViewBag.TotalPosts</p>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">Chưa có bài viết nào.</div>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-striped table-hover align-middle">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>@Html.DisplayNameFor(model => model.Title)</th>
+                    <th>@Html.DisplayNameFor(model => model.Slug)</th>
+                    <th>@Html.DisplayNameFor(model => model.Published)</th>
+                    <th>@Html.DisplayNameFor(model => model.Author)</th>
+                    <th>Cập nhật</th>
+                    <th class="text-end">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@(ViewBag.PostIndex + @Model.ToList().IndexOf(item) + 1)</td>
+                        <td style="min-width: 240px;">
+                            <div class="fw-semibold">@item.Title</div>
+                            @if (item.PostCategories.Any())
+                            {
+                                <div class="d-flex flex-wrap gap-1 mt-1">
+                                    @foreach (var postCategory in item.PostCategories.OrderBy(pc => pc.Category.Title))
+                                    {
+                                        <span class="badge text-bg-light border fw-normal">
+                                            @postCategory.Category.Title
+                                        </span>
+                                    }
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="text-muted small mt-1">Chưa có danh mục</div>
+                            }
+                        </td>
+                        <td><code>@item.Slug</code></td>
+                        <td>
+                            @if (item.Published)
+                            {
+                                <span class="badge text-bg-success">Đã xuất bản</span>
+                            }
+                            else
+                            {
+                                <span class="badge text-bg-secondary">Bản nháp</span>
+                            }
+                        </td>
+                        <td>@(item.Author?.UserName ?? item.AuthorId)</td>
+                        <td class="text-nowrap">
+                            <div>@item.DateUpdated.ToString("dd/MM/yyyy HH:mm")</div>
+                            <small class="text-muted">Tạo @item.DateCreated.ToString("dd/MM/yyyy")</small>
+                        </td>
+                        <td>
+                            <div class="d-flex flex-wrap gap-1 justify-content-end">
+                                <a asp-action="Edit" asp-route-id="@item.PostId" class="btn btn-sm btn-outline-primary">Sửa</a>
+                                <a asp-action="Details" asp-route-id="@item.PostId" class="btn btn-sm btn-outline-secondary">Chi
+                                    tiết</a>
+                                    <a asp-action="Delete" asp-route-id="@item.PostId" class="btn btn-sm btn-outline-danger">Xóa</a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+
+    @{
+        var pagingModel = new App.Models.PagingModel
+        {
+            currentpage = ViewBag.CurrentPage,
+            countpages = ViewBag.CountPages,
+            generateUrl = (int? p) => Url.Action("Index", new { p = p })
+        };
+    }
+
+    <partial name="_PagingXTL" model="@pagingModel" />

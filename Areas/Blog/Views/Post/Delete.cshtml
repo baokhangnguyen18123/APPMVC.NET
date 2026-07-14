@@ -1,0 +1,50 @@
+@model App.Models.Blog.Post
+
+@{
+    ViewData["Title"] = "Xóa bài viết";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="alert alert-warning">
+    Bạn có chắc muốn xóa bài viết này không? Thao tác này không thể hoàn tác.
+</div>
+
+<div class="card mb-3">
+    <div class="card-body">
+        <h2 class="card-title h4">@Model.Title</h2>
+        @if (!string.IsNullOrWhiteSpace(Model.Description))
+        {
+            <p class="card-text text-muted">@Model.Description</p>
+        }
+
+        <dl class="row mb-0">
+            <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Slug)</dt>
+            <dd class="col-sm-9"><code>@Model.Slug</code></dd>
+
+            <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Published)</dt>
+            <dd class="col-sm-9">
+                @if (Model.Published)
+                {
+                    <span class="badge text-bg-success">Đã xuất bản</span>
+                }
+                else
+                {
+                    <span class="badge text-bg-secondary">Bản nháp</span>
+                }
+            </dd>
+
+            <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Author)</dt>
+            <dd class="col-sm-9">@(Model.Author?.UserName ?? Model.AuthorId)</dd>
+
+            <dt class="col-sm-3">@Html.DisplayNameFor(model => model.DateCreated)</dt>
+            <dd class="col-sm-9">@Model.DateCreated.ToString("dd/MM/yyyy HH:mm")</dd>
+        </dl>
+    </div>
+</div>
+
+<form asp-action="Delete">
+    <input type="hidden" asp-for="PostId" />
+    <button type="submit" class="btn btn-danger">Xóa</button>
+    <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+</form>

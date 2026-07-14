@@ -7,119 +7,96 @@
 
 @model App.Models.PagingModel
 @{
-    int currentPage  = Model.currentpage;
-    int countPages   = Model.countpages;
-    var generateUrl  = Model.generateUrl;
+    int countPages = Math.Max(Model.countpages, 0);
 
+    if (countPages <= 1)
+        return;
 
-    
-    if (currentPage > countPages) 
-      currentPage = countPages;
-
-    if (countPages <= 1) return;
-    
-
-    int? preview = null;
-    int? next = null;
-
-    if (currentPage > 1)
-        preview = currentPage - 1;
-
-    if (currentPage < countPages)
-        next = currentPage + 1;
-
-    // Các trang hiện thị trong điều hướng
-    List<int> pagesRanges = new List<int>();    
-
-        
-    int delta      = 5;             // Số trang mở rộng về mỗi bên trang hiện tại     
-    int remain     = delta * 2;     // Số trang hai bên trang hiện tại
-
-    pagesRanges.Add(currentPage);
-    // Các trang phát triển về hai bên trang hiện tại
-    for (int i = 1; i <= delta; i++)
-    {
-        if (currentPage + i  <= countPages) {
-            pagesRanges.Add(currentPage + i); 
-            remain --;
-        }
-               
-        if (currentPage - i >= 1) {
-            pagesRanges.Insert(0, currentPage - i);
-            remain --;
-        }
-            
-    }    
-    // Xử lý thêm vào các trang cho đủ remain 
-    //(xảy ra ở đầu mút của khoảng trang không đủ trang chèn  vào)
-    if (remain > 0) {
-        if (pagesRanges[0] == 1) {
-            for (int i = 1; i <= remain; i++)
-            {
-                if (pagesRanges.Last() + 1 <= countPages) {
-                    pagesRanges.Add(pagesRanges.Last() + 1);
-                }
-            }
-        }
-        else {
-            for (int i = 1; i <= remain; i++)
-            {
-                if (pagesRanges.First() - 1 > 1) {
-                    pagesRanges.Insert(0, pagesRanges.First() - 1);
-                }
-            }
-        }
-    }
-
+    int currentPage = Math.Clamp(Model.currentpage, 1, countPages);
+    const int visiblePages = 5;
+    int startPage = Math.Max(1, currentPage - visiblePages / 2);
+    int endPage = Math.Min(countPages, startPage + visiblePages - 1);
+    startPage = Math.Max(1, endPage - visiblePages + 1);
+    var generateUrl = Model.generateUrl;
 }
 
-@* PHÁT SINH HTML*@
-
-<ul class="pagination">
-    <!-- Previous page link -->
-    @if (preview != null)
-    {
-        <li class="page-item">
-            <a class="page-link" href="@generateUrl(preview)">Trang trước</a>
-        </li>
-    }
-    else
-    {
-        <li class="page-item disabled">
-            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Trang trước</a>
-        </li>
-    }
-      
-    <!-- Numbered page links -->
-    @foreach (var pageitem in pagesRanges)
-    {
-        if (pageitem != currentPage) {
+<nav aria-label="Phân trang">
+    <ul class="pagination justify-content-center flex-wrap mb-0">
+        @if (currentPage > 1)
+        {
             <li class="page-item">
-                <a class="page-link" href="@generateUrl(pageitem)">
-                    @pageitem
+                <a class="page-link" href="@generateUrl(currentPage - 1)" aria-label="Trang trước">
+                    Trang trước
                 </a>
             </li>
-        }   
-        else 
+        }
+        else
         {
-            <li class="page-item active" aria-current="page">
-                <a class="page-link" href="#">@pageitem <span class="sr-only">(current)</span></a>
+            <li class="page-item disabled" aria-disabled="true">
+                <span class="page-link">Trang trước</span>
             </li>
         }
-    }
 
+        @if (startPage > 1)
+        {
+            <li class="page-item">
+                <a class="page-link" href="@generateUrl(1)">1</a>
+            </li>
 
-    <!-- Next page link -->
-    @if (next != null)
-    {
-        <li class="page-item">
-            <a class="page-link" href="@generateUrl(next)">Trang sau</a>
-        </li>
-    }
-    else 
-    {
-        <li class="page-item disabled">
-            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Trang sau</a>
-        </li>
-    }
-</ul>
+            @if (startPage > 2)
+            {
+                <li class="page-item disabled" aria-hidden="true">
+                    <span class="page-link">&hellip;</span>
+                </li>
+            }
+        }
+
+        @for (int pageNumber = startPage; pageNumber <= endPage; pageNumber++)
+        {
+            if (pageNumber == currentPage)
+            {
+                <li class="page-item active" aria-current="page">
+                    <span class="page-link">
+                        @pageNumber
+                        <span class="visually-hidden">(trang hiện tại)</span>
+                    </span>
+                </li>
+            }
+            else
+            {
+                <li class="page-item">
+                    <a class="page-link" href="@generateUrl(pageNumber)">@pageNumber</a>
+                </li>
+            }
+        }
+
+        @if (endPage < countPages)
+        {
+            @if (endPage < countPages - 1)
+            {
+                <li class="page-item disabled" aria-hidden="true">
+                    <span class="page-link">&hellip;</span>
+                </li>
+            }
+
+            <li class="page-item">
+                <a class="page-link" href="@generateUrl(countPages)">@countPages</a>
+            </li>
+        }
+
+        @if (currentPage < countPages)
+        {
+            <li class="page-item">
+                <a class="page-link" href="@generateUrl(currentPage + 1)" aria-label="Trang sau">
+                    Trang sau
+                </a>
+            </li>
+        }
+        else
+        {
+            <li class="page-item disabled" aria-disabled="true">
+                <span class="page-link">Trang sau</span>
+            </li>
+        }
+    </ul>
+</nav>

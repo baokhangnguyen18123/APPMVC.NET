@@ -1,0 +1,77 @@
+@model AppMvc.Areas.Blog.Models.CreatePostModel;
+
+@{
+    ViewData["Title"] = "Sửa bài viết";
+    var list = ViewData["CategoryIds"] as MultiSelectList;
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="row">
+    <div class="col-lg-8">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+            <input type="hidden" asp-for="@Model.PostId" />
+
+            <div class="mb-3">
+                <label asp-for="@Model.CategoryIDs" class="form-label"></label>
+                <select asp-for="@Model.CategoryIDs" multiple="multiple" class="w-100" asp-items="list"></select>
+                <span asp-validation-for="@Model.CategoryIDs" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Title" class="form-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Slug" class="form-label"></label>
+                <input asp-for="Slug" class="form-control" />
+                <div class="form-text">Chỉ dùng chữ thường, số và dấu gạch ngang.</div>
+                <span asp-validation-for="Slug" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Description" class="form-label"></label>
+                <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Content" class="form-label"></label>
+                <textarea asp-for="Content" class="form-control" rows="12"></textarea>
+                <span asp-validation-for="Content" class="text-danger"></span>
+            </div>
+
+            <div class="form-check form-switch mb-3">
+                <input class="form-check-input" asp-for="Published" />
+                <label asp-for="Published" class="form-check-label"></label>
+            </div>
+
+
+
+            <button type="submit" class="btn btn-primary">Lưu</button>
+            <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <link rel="stylesheet" href="~/lib/multiple-select/dist/multiple-select.min.css" />
+
+    <script src="~/lib/multiple-select/dist/multiple-select.min.js"></script>
+
+    <script>
+        $("#CategoryIDs").multipleSelect({
+            selectAll: false,
+            keepOpen: false,
+            isOpen: false,
+        });
+    </script>
+
+    <partial name="_ValidationScriptsPartial" />
+}

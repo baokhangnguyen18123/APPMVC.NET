@@ -1,12 +1,17 @@
 @{
-    var mgs = TempData["StatusMessage"] as string;
+    var message = TempData["StatusMessage"] as string;
 }
 
-@if (!String.IsNullOrEmpty(mgs))
+@if (!string.IsNullOrEmpty(message))
 {
-    var statusMessageClass = mgs.StartsWith("Error") ? "danger" : "success";
-    <div class="alert alert-@statusMessageClass alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        @mgs
+    var isError =
+        message.StartsWith("Error", StringComparison.OrdinalIgnoreCase)
+        || message.StartsWith("Lỗi", StringComparison.OrdinalIgnoreCase)
+        || message.StartsWith("Không thể", StringComparison.OrdinalIgnoreCase);
+    var statusMessageClass = isError ? "danger" : "success";
+
+    <div class="alert alert-@statusMessageClass alert-dismissible fade show" role="alert">
+        @message
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Đóng"></button>
     </div>
 }

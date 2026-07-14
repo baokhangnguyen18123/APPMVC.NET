@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="~/AppMVC.Net.styles.css" asp-append-version="true" />
 </head>
 
-<body>
+<body class="d-flex flex-column min-vh-100 mb-0">
     <header class="site-header">
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark mb-3">
             <div class="container">
@@ -38,22 +38,26 @@
                                asp-action="SendContact">Liên hệ</a>
                         </li>
                     </ul>
-                    <partial name="_LoginPartial" />
-                    <partial name="MenuManagePartial" />
-
+                    <div class="d-sm-flex align-items-sm-center ms-sm-auto">
+                        <partial name="_LoginPartial" />
+                        <partial name="MenuManagePartial" />
+                    </div>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div class="container flex-grow-1">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - AppMVC.Net - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <footer class="border-top footer text-muted position-static mt-auto py-3 lh-base text-wrap">
+        <div class="container d-flex flex-column flex-sm-row align-items-center justify-content-between gap-2">
+            <span>&copy; @DateTime.Now.Year AppMVC.Net</span>
+            <a asp-area="" asp-controller="Home" asp-action="Privacy" class="text-decoration-none">
+                Chính sách bảo mật
+            </a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
