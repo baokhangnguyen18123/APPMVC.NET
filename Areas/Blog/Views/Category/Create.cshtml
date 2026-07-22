@@ -48,3 +48,9 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
+
+
+@{
+    var summernote = new App.Models.Summernote("#Description");
+}
+<partial name="_Summernote" model="summernote" />
