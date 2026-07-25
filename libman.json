@@ -5,11 +5,23 @@
     {
       "library": "multiple-select@2.4.0",
       "destination": "wwwroot/lib/multiple-select",
-      "files": ["dist/multiple-select.min.js", "dist/multiple-select.min.css"]
+      "files": [
+        "dist/multiple-select.min.js",
+        "dist/multiple-select.min.css"
+      ]
     },
     {
       "library": "summernote@0.9.1",
       "destination": "wwwroot/lib/summernote"
+    },
+    {
+      "library": "jquery-ui@1.14.2",
+      "destination": "wwwroot/lib/jqueryui/"
+    },
+    {
+      "provider": "cdnjs",
+      "library": "elfinder@2.1.69",
+      "destination": "wwwroot/lib/elfinder/"
     }
   ]
 }

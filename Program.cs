@@ -5,6 +5,7 @@ using App.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Routing.Constraints;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -123,9 +124,16 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseCustomStatusCodePages();
-app.UseRouting();
-
+app.UseStaticFiles();
+app.UseStaticFiles(
+    new StaticFileOptions
+    {
+        FileProvider = new PhysicalFileProvider(
+            Path.Combine(Directory.GetCurrentDirectory(), "Uploads")
+        ),
+        RequestPath = "/contents",
+    }
+);
 app.UseAuthentication();
 app.UseAuthorization();
 
