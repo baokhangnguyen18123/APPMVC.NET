@@ -1,0 +1,94 @@
+@using App.Components;
+@model Post
+@{
+    List<Category> categories = ViewBag.categories as List<Category>;
+    Category category = ViewBag.category as Category;
+    ViewData["Title"] = Model.Title;
+    IQueryable<Post> orderPosts = ViewBag.orderPosts as IQueryable<Post>;
+}
+<div class="blog-page blog-page--details">
+    <nav class="blog-breadcrumb" aria-label="breadcrumb">
+        <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item">
+                <a asp-controller="ViewPost" asp-action="Index" asp-area="Blog" asp-route-categorySlug="">Blog</a>
+            </li>
+            @if (category != null)
+            {
+                var li = category.ListParents();
+                foreach (var item in li)
+                {
+                    <li class="breadcrumb-item">
+                        <a asp-action="Index" asp-route-categorySlug="@item.Slug">@item.Title</a>
+                    </li>
+                }
+                <li class="breadcrumb-item">
+                    <a asp-action="Index" asp-route-categorySlug="@category.Slug">@category.Title</a>
+                </li>
+            }
+            <li class="breadcrumb-item active" aria-current="page">@Model.Title</li>
+        </ol>
+    </nav>
+
+    <article class="card blog-article">
+        <header class="blog-article__header">
+            @if (category != null)
+            {
+                <a class="blog-article__category" asp-action="Index" asp-route-categorySlug="@category.Slug">
+                    @category.Title
+                </a>
+            }
+            <h1 class="display-5 fw-bold">@Model.Title</h1>
+            <p class="blog-article__lead">@Model.Description</p>
+            <div class="blog-article__meta">
+                <span>Bởi <strong>@(Model.Author?.UserName ?? "Tác giả")</strong></span>
+                <span class="blog-article__meta-divider" aria-hidden="true"></span>
+                <time datetime="@Model.DateCreated.ToString("yyyy-MM-dd")">
+                    @Model.DateCreated.ToString("dd/MM/yyyy")
+                </time>
+            </div>
+        </header>
+
+        <div class="blog-article__body">
+            @Html.Raw(Model.Content)
+        </div>
+
+        <footer class="blog-article__footer">
+            <a asp-action="Index" asp-route-categorySlug="@category?.Slug" class="btn btn-outline-primary">
+                <span aria-hidden="true">←</span> Quay lại danh sách bài viết
+            </a>
+        </footer>
+    </article>
+</div>
+
+@section Sidebar {
+    <div class="blog-sidebar-stack">
+        <div class="card blog-sidebar-card">
+            <div class="card-body p-3 p-xl-4">
+                @await Component.InvokeAsync("App.Components.CategorySideBar",
+                new CategorySideBar.CategorySidebarData()
+                {
+                    Categories = categories,
+                    Level = 0,
+                    CategorySlug = category?.Slug
+                })
+            </div>
+        </div>
+
+        <section class="card blog-sidebar-card blog-related-posts">
+            <div class="card-body p-3 p-xl-4">
+                <div class="blog-sidebar-card__eyebrow">Có thể bạn quan tâm</div>
+                <h2 class="h5 mb-3">Bài viết cùng chuyên mục</h2>
+                <div class="list-group list-group-flush">
+                    @foreach (var post in orderPosts)
+                    {
+                        <a class="list-group-item list-group-item-action" asp-area="Blog" asp-action="Details"
+                           asp-route-postSlug="@post.Slug" asp-controller="ViewPost">
+                            <span>@post.Title</span>
+                            <small>@post.DateCreated.ToString("dd/MM/yyyy")</small>
+                        </a>
+                    }
+                </div>
+            </div>
+        </section>
+    </div>
+}

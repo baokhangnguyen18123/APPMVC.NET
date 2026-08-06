@@ -1,0 +1,45 @@
+// Chân trang
+.site-footer {
+  width: 100%;
+  color: $muted-text-color;
+  background-color: $footer-bg;
+  border-top: 1px solid $border-color;
+
+  .container {
+    min-height: $footer-height;
+    font-size: 0.9rem;
+  }
+
+  span {
+    letter-spacing: 0.01em;
+  }
+
+  a {
+    padding: 0.25rem 0.5rem;
+    border-radius: 8px;
+    color: $muted-text-color;
+    font-weight: 600;
+
+    &:hover,
+    &:focus-visible {
+      color: $primary-hover-color;
+      background-color: rgba($primary-color, 0.08);
+    }
+
+    &:focus-visible {
+      outline: 2px solid rgba($primary-color, 0.35);
+      outline-offset: 2px;
+    }
+  }
+}
+
+@media (max-width: 767.98px) {
+  .site-footer {
+    .container {
+      min-height: auto;
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+      text-align: center;
+    }
+  }
+}

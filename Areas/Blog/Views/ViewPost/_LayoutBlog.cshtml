@@ -1,0 +1,13 @@
+@{
+    Layout = "_Layout";
+}
+<div class="row blog-layout g-4">
+    <div class="col-lg-4 blog-layout__sidebar">
+        @RenderSection("Sidebar", required: false)
+    </div>
+    <div class="col-lg-8 blog-layout__main">
+        @RenderBody()
+    </div>
+
+</div>
+

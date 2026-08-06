@@ -2,21 +2,31 @@
    1. VARIABLES (Khai báo biến hệ thống)
    ========================================================================== */
 // Bảng màu chuẩn mực, độ tương phản cao
-$primary-color: #0d6efd; // Xanh dương chủ đạo
-$navbar-bg: #0b2239; // Xanh Navy đậm (Sâu và sang trọng hơn #0f3a5f)
-$footer-bg: #f8fafc; // Xám trắng mượt mà (Thay cho màu tím nhạt cũ)
+$primary-color: #1b3c6d; // Xanh dương chủ đạo
+$primary-hover-color: #12294d;
+$navbar-bg: #075985; // Xanh Navy đậm
+$footer-bg: #0e3458ea; // Xám trắng mượt mà (Thay cho màu tím nhạt cũ)
 $text-color: #334155; // Màu chữ xám tro đậm (Dễ đọc, không gây mỏi mắt)
-$background-color: #ffffff; // Nền trắng tinh khiết
+$heading-color: #0f172a;
+$muted-text-color: #dfe2e6;
+$border-color: #e2e8f0;
+$background-color: #ffffff;
+$surface-color: #ffffff;
 
 // Accent colors (Màu nhấn)
-$nav-text-color: #ffffff; // Màu chữ menu (Xám sáng)
-$nav-hover-color: #38bdf8; // Màu xanh cyan sáng rực khi hover
+$nav-text-color: #e2e8f0;
+$nav-hover-color: #ffffff;
+$nav-accent-color: #7dd3fc;
 
 // Cấu hình Font và Spacing
 $font-family-base:
   -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
   Arial, sans-serif;
 $footer-height: 70px; // Tăng nhẹ chiều cao footer cho thoáng
+$radius-medium: 12px;
+$radius-large: 18px;
+$shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.1);
+$transition-base: 0.2s ease;
 
 /* ==========================================================================
    2. GLOBAL STYLES (Thiết lập chung cho toàn trang)
@@ -35,7 +45,6 @@ body {
   font-family: $font-family-base;
   color: $text-color;
   background-color: $background-color;
-  margin-bottom: $footer-height;
   -webkit-font-smoothing: antialiased; // Giúp font chữ trên màn hình độ phân giải cao mượt hơn
 }
 
@@ -56,27 +65,26 @@ a {
 // Thanh điều hướng (Header)
 @import "header";
 
+// Menu điều hướng
+@import "menu";
+
 // Phần chân trang (Footer)
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  line-height: $footer-height;
-  background-color: $footer-bg;
-  border-top: 1px solid #e2e8f0; // Đường viền tinh tế
+@import "footer";
 
-  .container {
-    color: #64748b;
-    font-size: 0.9rem;
+// Khu vực liên hệ
+@import "contact";
 
-    a {
-      color: #64748b;
-      font-weight: 500;
+// Quy tắc responsive dùng chung cho bốn nhóm thiết bị
+@import "responsive";
 
-      &:hover {
-        color: $primary-color;
-      }
-    }
+//Post details
+@import "_post";
+// Khung chứa nội dung chính
+.site-content {
+  main {
+    padding-top: 2rem;
+    padding-bottom: 3rem;
+    min-height: calc(100vh - 150px);
   }
 }
 

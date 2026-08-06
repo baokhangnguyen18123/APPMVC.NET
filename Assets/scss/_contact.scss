@@ -1,0 +1,399 @@
+// Trang gửi và quản lý liên hệ
+.contact-page {
+  color: $text-color;
+
+  h1 {
+    margin-bottom: 0;
+    color: $heading-color;
+    font-size: clamp(1.85rem, 4vw, 2.75rem);
+    font-weight: 750;
+    letter-spacing: -0.035em;
+  }
+
+  &__header {
+    margin-bottom: 1.5rem;
+  }
+
+  &__lead {
+    max-width: 36rem;
+    margin: 1rem 0 1.35rem;
+    color: $text-color;
+    font-size: 1.08rem;
+    line-height: 1.75;
+  }
+
+  &__accent {
+    width: 4rem;
+    height: 4px;
+    margin: 0;
+    border: 0;
+    border-radius: 999px;
+    background: linear-gradient(90deg, $primary-color, #06b6d4);
+    opacity: 1;
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+  }
+}
+
+.contact-page--send {
+  padding: clamp(1.5rem, 4vw, 3.5rem);
+  overflow: hidden;
+  border: 1px solid rgba($primary-color, 0.12);
+  border-radius: 24px;
+  background:
+    radial-gradient(
+      circle at 8% 12%,
+      rgba(14, 165, 233, 0.16),
+      transparent 32%
+    ),
+    linear-gradient(135deg, #eff6ff 0%, #f8fafc 55%, #ecfeff 100%);
+
+  .row {
+    position: relative;
+  }
+}
+
+.contact-page--admin {
+  padding: 0.25rem 0 1rem;
+}
+
+.contact-card,
+.contact-record,
+.contact-table-shell {
+  border: 1px solid $border-color;
+  border-radius: $radius-large;
+  background-color: $surface-color;
+  box-shadow: $shadow-soft;
+}
+
+.contact-card {
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 4px;
+    background: linear-gradient(90deg, $primary-color, #06b6d4);
+    content: "";
+  }
+
+  &__body {
+    padding: clamp(1.5rem, 4vw, 2.5rem);
+  }
+}
+
+.contact-form {
+  .form-floating {
+    margin-bottom: 1.1rem;
+  }
+
+  .form-floating > label {
+    padding-left: 1rem;
+    color: #64748b;
+  }
+
+  &__control {
+    min-height: 3.65rem;
+    border: 1px solid $border-color;
+    border-radius: $radius-medium;
+    color: $heading-color;
+    background-color: #f8fafc;
+    transition:
+      border-color $transition-base,
+      background-color $transition-base,
+      box-shadow $transition-base;
+
+    &:hover {
+      border-color: #bfdbfe;
+    }
+
+    &:focus {
+      border-color: $primary-color;
+      background-color: $surface-color;
+      box-shadow: 0 0 0 0.22rem rgba($primary-color, 0.12);
+    }
+  }
+
+  &__message {
+    min-height: 9rem !important;
+    resize: vertical;
+  }
+
+  &__validation {
+    display: block;
+    min-height: 1.15rem;
+    margin-top: 0.3rem;
+    color: #be123c;
+    font-size: 0.82rem;
+    font-style: italic;
+  }
+
+  &__summary {
+    margin-bottom: 1.25rem;
+    border-radius: $radius-medium;
+  }
+
+  &__actions {
+    margin-top: 0.25rem;
+  }
+
+  .validation-summary-valid {
+    display: none;
+  }
+
+  &__submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 3.25rem;
+    gap: 0.6rem;
+    margin-top: 0.5rem;
+    border: 0;
+    border-radius: 999px;
+    color: #ffffff;
+    background: linear-gradient(120deg, $primary-color, #0284c7);
+    font-weight: 700;
+    box-shadow: 0 12px 24px rgba($primary-color, 0.22);
+    transition:
+      box-shadow $transition-base,
+      transform $transition-base;
+
+    &:hover {
+      color: #ffffff;
+      box-shadow: 0 16px 30px rgba($primary-color, 0.3);
+      transform: translateY(-2px);
+    }
+
+    &:focus-visible {
+      color: #ffffff;
+      outline: 3px solid rgba($primary-color, 0.25);
+      outline-offset: 3px;
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+}
+
+.contact-table-shell {
+  overflow: hidden;
+}
+
+.contact-table {
+  margin-bottom: 0;
+
+  thead th {
+    padding: 0.9rem 1rem;
+    border-bottom: 1px solid #bfdbfe;
+    color: #0b61d1;
+    background-color: #eff6ff;
+    font-size: 0.76rem;
+    font-weight: 750;
+    letter-spacing: 0.055em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  tbody {
+    td {
+      padding: 1rem;
+      border-color: $border-color;
+      color: $text-color;
+      vertical-align: middle;
+    }
+
+    tr {
+      transition: background-color $transition-base;
+
+      &:hover {
+        background-color: #f8fafc;
+      }
+
+      &:last-child td {
+        border-bottom: 0;
+      }
+    }
+  }
+
+  &__actions {
+    text-align: right;
+    white-space: nowrap;
+  }
+}
+
+.contact-action {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.6rem;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  font-weight: 650;
+
+  &:hover,
+  &:focus-visible {
+    background-color: #eff6ff;
+  }
+
+  &--delete {
+    color: #be123c;
+
+    &:hover,
+    &:focus-visible {
+      color: #9f1239;
+      background-color: #fff1f2;
+    }
+  }
+}
+
+.contact-record {
+  padding: clamp(1.25rem, 3vw, 2rem);
+
+  &__body {
+    margin-bottom: 0;
+
+    dt,
+    dd {
+      padding-top: 0.8rem;
+      padding-bottom: 0.8rem;
+      border-bottom: 1px solid $border-color;
+    }
+
+    dt {
+      color: $muted-text-color;
+      font-weight: 650;
+    }
+
+    dd {
+      margin-bottom: 0;
+      color: $heading-color;
+      overflow-wrap: anywhere;
+    }
+
+    .contact-record__message {
+      white-space: pre-wrap;
+    }
+  }
+
+  &__warning {
+    margin-bottom: 1rem;
+    padding: 0.9rem 1rem;
+    border: 1px solid #fecdd3;
+    border-radius: $radius-medium;
+    color: #9f1239;
+    background-color: #fff1f2;
+    font-size: 1rem;
+    font-weight: 650;
+  }
+}
+
+.contact-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 0.55rem 1rem;
+  border: 1px solid $border-color;
+  border-radius: 10px;
+  color: $text-color;
+  background-color: $surface-color;
+  font-weight: 650;
+  transition:
+    border-color $transition-base,
+    color $transition-base,
+    background-color $transition-base,
+    box-shadow $transition-base;
+
+  &:hover,
+  &:focus-visible {
+    border-color: #bfdbfe;
+    color: $primary-hover-color;
+    background-color: #eff6ff;
+  }
+
+  &:focus-visible {
+    outline: 2px solid rgba($primary-color, 0.3);
+    outline-offset: 2px;
+  }
+
+  &--danger {
+    border-color: #e11d48;
+    color: #ffffff;
+    background-color: #e11d48;
+
+    &:hover,
+    &:focus-visible {
+      border-color: #be123c;
+      color: #ffffff;
+      background-color: #be123c;
+      box-shadow: 0 8px 18px rgba(190, 18, 60, 0.2);
+    }
+  }
+}
+
+@media (max-width: 767.98px) {
+  .contact-page--send {
+    padding: 1.25rem;
+    border-radius: $radius-large;
+  }
+
+  .contact-page__intro {
+    margin-bottom: 0.5rem;
+  }
+
+  .contact-table {
+    thead th,
+    tbody td {
+      padding-right: 0.8rem;
+      padding-left: 0.8rem;
+    }
+  }
+}
+
+@media (max-width: 575.98px) {
+  .contact-card__body {
+    padding: 1.25rem;
+  }
+
+  .contact-record {
+    &__body {
+      dt {
+        padding-bottom: 0.2rem;
+        border-bottom: 0;
+      }
+
+      dd {
+        padding-top: 0.2rem;
+      }
+    }
+  }
+
+  .contact-page__actions {
+    align-items: stretch;
+
+    .contact-button {
+      flex: 1 1 auto;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-form__submit,
+  .contact-table tbody tr {
+    transition: none;
+  }
+
+  .contact-form__submit:hover {
+    transform: none;
+  }
+}

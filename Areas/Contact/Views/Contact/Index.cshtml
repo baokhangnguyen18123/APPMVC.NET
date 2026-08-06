@@ -4,9 +4,14 @@
     ViewData["Title"] = "Danh sách liên hệ";
 }
 
-<h1>@ViewData["Title"]</h1>
+<section class="contact-page contact-page--admin">
+<div class="contact-page__header">
+    <h1>@ViewData["Title"]</h1>
+</div>
 
-<table class="table">
+<div class="contact-table-shell">
+<div class="table-responsive">
+<table class="table contact-table">
     <thead>
         <tr>
             <th>
@@ -22,7 +27,7 @@
                 @Html.DisplayNameFor(model => model.Phone)
             </th>
 
-            <th></th>
+            <th class="contact-table__actions" aria-label="Thao tác"></th>
         </tr>
     </thead>
     <tbody>
@@ -41,11 +46,15 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Phone)
                 </td>
-                <td>
-                    <a asp-action="Details" asp-route-id="@item.ID">Chi tiết</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ID">Xóa</a>
+                <td class="contact-table__actions">
+                    <a class="contact-action" asp-action="Details" asp-route-id="@item.ID">Chi tiết</a> |
+                    <a class="contact-action contact-action--delete" asp-action="Delete"
+                       asp-route-id="@item.ID">Xóa</a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+</div>
+</div>
+</section>

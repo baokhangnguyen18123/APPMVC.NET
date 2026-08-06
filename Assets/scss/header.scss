@@ -1,78 +1,51 @@
 // Thanh điều hướng (Header)
-.navbar {
-  background: linear-gradient(90deg, #071827 0%, $navbar-bg 48%, #12324f 100%);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); // Đổ bóng sâu và mềm hơn
-  padding: 0.75rem 0; // Tăng khoảng cách trên dưới cho thanh menu
+.site-header {
+  position: relative;
+  z-index: 1030;
+
+  .navbar {
+    background: linear-gradient(120deg, #071f35 0%, $navbar-bg 52%, #0b5d80 100%);
+    box-shadow: 0 10px 30px rgba(7, 31, 53, 0.18);
+    padding: 0.7rem 0;
+  }
 
   .navbar-brand {
     display: inline-flex;
     align-items: center;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    color: #8176b7 !important; // Cực kỳ nổi bật trên nền tối
+    color: #ffffff !important;
+    font-size: 1.2rem;
+    font-weight: 750;
+    letter-spacing: 0.025em;
+    line-height: 1;
+    text-shadow: 0 1px 2px rgba(7, 31, 53, 0.2);
 
     span {
-      color: $nav-hover-color; // Điểm nhấn nhỏ cho Logo
+      color: $nav-accent-color;
     }
-  }
 
-  // Tùy chỉnh Menu Links trực tiếp từ SCSS
-  .navbar-nav {
-    .nav-item {
-      margin: 0 0.25rem;
-
-      .nav-link {
-        color: $nav-text-color !important;
-        font-weight: 500;
-        padding: 0.55rem 0.9rem;
-        border-radius: 999px;
-        transition: all 0.3s ease;
-
-        &:hover {
-          color: $nav-hover-color !important;
-          background-color: rgba(
-            255,
-            255,
-            255,
-            0.05
-          ); // Hiệu ứng sáng nền nhẹ khi trỏ chuột
-        }
-      }
-    }
-  }
-
-  // Chỉnh màu nút toggle trên giao diện Mobile
-  .dropdown-menu {
-    border: none;
-    border-radius: 10px;
-    box-shadow: 0 16px 36px rgba(15, 23, 42, 0.16);
-    padding: 0.45rem;
-
-    .dropdown-item {
-      border-radius: 8px;
-      color: $text-color;
-      font-weight: 500;
-
-      &:hover {
-        background-color: #e0f2fe;
-        color: #075985;
-      }
+    &:hover,
+    &:focus-visible {
+      color: #ffffff !important;
     }
   }
 
   .navbar-toggler {
-    border-color: rgba(255, 255, 255, 0.2);
-    .navbar-toggler-icon {
-      filter: invert(1); // Đổi màu icon hamburger sang trắng
-    }
-  }
-}
+    border-color: rgba(255, 255, 255, 0.28);
+    border-radius: 10px;
+    padding: 0.4rem 0.55rem;
+    transition:
+      background-color $transition-base,
+      border-color $transition-base,
+      box-shadow $transition-base;
 
-// Khung chứa nội dung chính
-.container {
-  main {
-    padding-top: 2rem;
-    padding-bottom: 3rem;
-    min-height: calc(100vh - 150px);
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.45);
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 0.2rem rgba(125, 211, 252, 0.28);
+    }
+
   }
 }

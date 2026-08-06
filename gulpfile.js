@@ -1,21 +1,41 @@
-const gulp = require("gulp");
+const { src, dest, watch, series } = require("gulp");
 const sass = require("gulp-sass")(require("sass"));
-const cssmin = require("gulp-cssmin");
 
-// Tác vụ 1: Biên dịch và tối ưu hóa SCSS thành CSS (Tác vụ mặc định)
-gulp.task("default", function () {
-  // Chỉ định đường dẫn đọc toàn bộ các tệp .scss
-  return (
-    gulp
-      .src("./assets/scss/site.scss")
-      .pipe(sass().on("error", sass.logError)) // Biên dịch SCSS sang CSS
-      // .pipe(cssmin()) // Xóa bỏ khoảng trắng và ký tự thừa để thu gọn dung lượng
-      .pipe(gulp.dest("./wwwroot/css/"))
-  ); // Xuất tệp CSS đích vào thư mục wwwroot để ASP.NET Core sử dụng
-});
+const paths = {
+  scssEntry: "./Assets/scss/site.scss",
+  scssFiles: "./Assets/scss/**/*.scss",
+  cssOutput: "./wwwroot/css/",
+};
 
-// Tác vụ 2: Giám sát mã nguồn (Watch)
-gulp.task("watch", function () {
-  // Treo tiến trình và giám sát liên tục, gọi lại tác vụ 'default' ngay khi có sự thay đổi
-  gulp.watch("./assets/scss/site.scss", gulp.series("default"));
-});
+// Biên dịch SCSS dùng trong quá trình phát triển
+function compileScss() {
+  return src(paths.scssEntry)
+    .pipe(sass.sync().on("error", sass.logError))
+    .pipe(dest(paths.cssOutput));
+}
+
+// Biên dịch và thu gọn CSS để triển khai
+function buildScss() {
+  return src(paths.scssEntry)
+    .pipe(
+      sass
+        .sync({
+          style: "compressed",
+        })
+        .on("error", sass.logError),
+    )
+    .pipe(dest(paths.cssOutput));
+}
+
+// Theo dõi tất cả file SCSS
+function watchScss() {
+  return watch(paths.scssFiles, compileScss);
+}
+
+// Chạy compile trước, sau đó mới bắt đầu theo dõi
+const development = series(compileScss, watchScss);
+
+exports.scss = compileScss;
+exports.build = buildScss;
+exports.watch = development;
+exports.default = development;

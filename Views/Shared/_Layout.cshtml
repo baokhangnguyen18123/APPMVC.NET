@@ -17,20 +17,22 @@
 
 <body class="d-flex flex-column min-vh-100 mb-0">
     <header class="site-header">
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark mb-3">
+        <nav class="navbar navbar-expand-lg navbar-dark mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
                     App<span>MVC</span>.Net
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent"
                         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <div class="navbar-collapse collapse d-lg-inline-flex justify-content-between"
+                     id="navbarSupportedContent">
                     <ul class="navbar-nav flex-grow-1">
-                        @* <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li> *@
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="Blog" asp-controller="ViewPost" asp-action="Index">Blog</a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
@@ -42,7 +44,7 @@
                                asp-action="SendContact">Liên hệ</a>
                         </li>
                     </ul>
-                    <div class="d-sm-flex align-items-sm-center ms-sm-auto">
+                    <div class="d-lg-flex align-items-lg-center ms-lg-auto">
                         <partial name="_LoginPartial" />
                         <partial name="_MenuManagePartial" />
                     </div>
@@ -50,14 +52,14 @@
             </div>
         </nav>
     </header>
-    <div class="container flex-grow-1">
+    <div class="container site-content flex-grow-1">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted position-static mt-auto py-3 lh-base text-wrap">
-        <div class="container d-flex flex-column flex-sm-row align-items-center justify-content-between gap-2">
+    <footer class="footer site-footer mt-auto">
+        <div class="container d-flex flex-column flex-md-row align-items-center justify-content-between gap-2">
             <span>&copy; @DateTime.Now.Year AppMVC.Net</span>
             <a asp-area="" asp-controller="Home" asp-action="Privacy" class="text-decoration-none">
                 Chính sách bảo mật

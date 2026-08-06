@@ -5,12 +5,14 @@
     ViewData["Title"] = "Xóa liên hệ";
 }
 
-<h1>@ViewData["Title"]</h1>
+<section class="contact-page contact-page--admin">
+<div class="contact-page__header">
+    <h1>@ViewData["Title"]</h1>
+</div>
 
-<h3>Bạn có chắc muốn xóa liên hệ này không ?</h3>
-<div>
-    <hr />
-    <dl class="row">
+<h2 class="contact-record__warning">Bạn có chắc muốn xóa liên hệ này không ?</h2>
+<div class="contact-record">
+    <dl class="row contact-record__body">
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.FullName)
         </dt>
@@ -38,14 +40,15 @@
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Message)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-10 contact-record__message">
             @Html.DisplayFor(model => model.Message)
         </dd>
     </dl>
 
-    <form asp-action="Delete">
+    <form asp-action="Delete" class="contact-page__actions">
         <input type="hidden" asp-for="ID" />
-        <input type="submit" value="Xóa" class="btn btn-danger" /> |
-        <a asp-action="Index">Danh sách liên hệ</a>
+        <input type="submit" value="Xóa" class="contact-button contact-button--danger" />
+        <a class="contact-button" asp-action="Index">Danh sách liên hệ</a>
     </form>
 </div>
+</section>

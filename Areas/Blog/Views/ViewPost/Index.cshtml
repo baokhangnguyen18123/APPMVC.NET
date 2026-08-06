@@ -1,0 +1,135 @@
+@using App.Components;
+@model List<Post>
+@{
+    List<Category> categories = ViewBag.categories as List<Category>;
+    Category category = ViewBag.category as Category;
+    ViewData["Title"] = (category != null) ? category.Title : "Bài viết trong tất cả danh mục";
+}
+<div class="blog-page blog-page--index">
+    <nav class="blog-breadcrumb" aria-label="breadcrumb">
+        <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item">
+                <a asp-controller="ViewPost" asp-action="Index" asp-area="Blog" asp-route-categorySlug="">Blog</a>
+            </li>
+            @if (category != null)
+            {
+                var li = category.ListParents();
+                foreach (var item in li)
+                {
+                    <li class="breadcrumb-item">
+                        <a asp-action="Index" asp-route-categorySlug="@item.Slug">@item.Title</a>
+                    </li>
+                }
+                <li class="breadcrumb-item active" aria-current="page">@category.Title</li>
+            }
+        </ol>
+    </nav>
+
+    <header class="blog-page__hero">
+        <div class="blog-page__eyebrow">Góc chia sẻ</div>
+        <div class="d-flex flex-column flex-md-row align-items-md-end justify-content-between gap-3">
+            <div>
+                <h1 class="display-6 fw-bold mb-2">@ViewData["Title"]</h1>
+                @if (category != null)
+                {
+                    <p class="lead text-secondary mb-0">@category.Description</p>
+                }
+                else
+                {
+                    <p class="lead text-secondary mb-0">Khám phá kiến thức và những bài viết mới nhất từ tất cả chuyên mục.</p>
+                }
+            </div>
+            <span class="blog-page__count badge rounded-pill">
+                @ViewBag.TotalPosts bài viết
+            </span>
+        </div>
+    </header>
+
+    @if (Model.Count == 0)
+    {
+        <div class="blog-empty-state text-center">
+            <div class="blog-empty-state__icon" aria-hidden="true">✦</div>
+            <h2 class="h4">Chưa có bài viết</h2>
+            <p class="text-secondary mb-0">Chuyên mục này chưa có nội dung. Vui lòng quay lại sau.</p>
+        </div>
+    }
+    else
+    {
+        <div class="blog-post-list">
+            @foreach (var post in Model)
+            {
+                var primaryCategory = post.PostCategories.FirstOrDefault()?.Category;
+
+                <article class="card blog-post-card">
+                    <div class="row g-0 h-100">
+                        <div class="col-md-4">
+                            <a class="blog-post-card__media" asp-action="Details" asp-route-postSlug="@post.Slug"
+                               asp-controller="ViewPost" tabindex="-1" aria-hidden="true">
+                                <img src="/contents/NoImg.png" alt="" loading="lazy" />
+                            </a>
+                        </div>
+
+                        <div class="col-md-8">
+                            <div class="card-body blog-post-card__body">
+                                <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
+                                    <span class="blog-post-card__category">
+                                        @(primaryCategory?.Title ?? "Chưa phân loại")
+                                    </span>
+                                    <time class="blog-post-card__date" datetime="@post.DateCreated.ToString("yyyy-MM-dd")">
+                                        @post.DateCreated.ToString("dd/MM/yyyy")
+                                    </time>
+                                </div>
+
+                                <h2 class="h4 card-title mb-2">
+                                    <a asp-action="Details" asp-route-postSlug="@post.Slug" asp-controller="ViewPost">
+                                        @post.Title
+                                    </a>
+                                </h2>
+                                <p class="card-text blog-post-card__description">@post.Description</p>
+
+                                <div class="blog-post-card__footer">
+                                    <span class="blog-post-card__author">
+                                        Bởi @(post.Author?.UserName ?? "Tác giả")
+                                    </span>
+                                    <a class="blog-post-card__link" asp-action="Details" asp-route-postSlug="@post.Slug"
+                                       asp-controller="ViewPost" aria-label="Đọc bài @post.Title">
+                                        Đọc bài viết <span aria-hidden="true">→</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            }
+        </div>
+
+        <div class="blog-pagination">
+            @{
+                var pagingModel = new App.Models.PagingModel
+                {
+                    currentpage = ViewBag.CurrentPage,
+                    countpages = ViewBag.CountPages,
+                    generateUrl = (int? p) => Url.Action("Index", new { p = p })
+                };
+            }
+
+            <partial name="_PagingXTL" model="@pagingModel" />
+        </div>
+    }
+</div>
+
+@section Sidebar {
+    <div class="blog-sidebar-stack">
+        <div class="card blog-sidebar-card">
+            <div class="card-body p-3 p-xl-4">
+                @await Component.InvokeAsync("App.Components.CategorySideBar",
+                new CategorySideBar.CategorySidebarData()
+                {
+                    Categories = categories,
+                    Level = 0,
+                    CategorySlug = ViewBag.categorySlug
+                })
+            </div>
+        </div>
+    </div>
+}
